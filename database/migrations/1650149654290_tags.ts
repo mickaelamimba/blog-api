@@ -7,7 +7,7 @@ export default class Tags extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('title',75).notNullable()
-      table.string('metaTitle',100).nullable()
+      table.string('meta_title',100).nullable()
       table.string('slug',100).notNullable().unique()
       table.text('content').nullable()
     })
