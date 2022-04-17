@@ -6,11 +6,11 @@ export default class Users extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('firstName',50)
-      table.string('lastName',50)
+      table.string('first_name',50)
+      table.string('last_name',50)
       table.string('mobile',15).unique()
       table.string('email',50).unique()
-      table.string('passwordHash',32)
+      table.string('password_hash',255)
       table.text('intro','tinytext')
       table.text('profile')
 
@@ -18,7 +18,7 @@ export default class Users extends BaseSchema {
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
       table.timestamp('registered_at', { useTz: true })
-      table.timestamp('lastLogin', { useTz: true })
+      table.timestamp('last_login', { useTz: true })
     })
   }
 
