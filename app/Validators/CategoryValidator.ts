@@ -32,7 +32,7 @@ export default class CategoryValidator {
     metaTitle:schema.string({trim:true},[
       rules.maxLength(100),
     ]),
-    content:schema.string(),
+    content:schema.string({escape:true}),
   })
 
   /**
