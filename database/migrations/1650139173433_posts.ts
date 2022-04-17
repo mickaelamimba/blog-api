@@ -9,7 +9,7 @@ export default class Posts extends BaseSchema {
       table.integer('author_id').notNullable().unsigned()
       table.integer('parent_id').nullable().unsigned()
       table.string('title',75).notNullable()
-      table.string('metaTitle',100).nullable()
+      table.string('meta_title',100).nullable()
       table.string('slug',100).notNullable().unique()
       table.text('summary').nullable()
       table.text('content').nullable()
@@ -21,9 +21,9 @@ export default class Posts extends BaseSchema {
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
-      table.timestamp('publishedAt', { useTz: true })
-      table.timestamp('createdAt', { useTz: true })
-      table.timestamp('updatedAt', { useTz: true })
+      table.timestamp('published_at', { useTz: true })
+      table.timestamp('created_at', { useTz: true })
+      table.timestamp('updated_at', { useTz: true })
     })
   }
 
