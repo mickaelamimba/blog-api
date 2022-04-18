@@ -6,6 +6,7 @@ import User from 'App/Models/User'
 import Category from 'App/Models/Category'
 import Tag from 'App/Models/Tag'
 import PostComment from 'App/Models/PostComment'
+import PostMeta from 'App/Models/PostMeta'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -59,4 +60,9 @@ export default class Post extends BaseModel {
     foreignKey:'post_id',
   })
   public comments:HasMany<typeof PostComment>
+
+  @hasMany(() => PostMeta,{
+    foreignKey:'post_id',
+  })
+  public postMeta:HasMany<typeof PostMeta>
 }

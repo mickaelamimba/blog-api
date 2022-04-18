@@ -19,10 +19,16 @@ export default class PostsController {
     post.summary = summary
     post.content = content
     await user?.related('post').save(post)
+    let origin = request.completeUrl().toString()
+    let postMeta : Object = {
+      url: `${origin}/${post.slug}`,
+    }
+    const contentMeta = JSON.stringify(postMeta)
+    await post.related('postMeta').create({content:contentMeta})
     if (categories && categories > 0) {
       await post.related('category').attach([categories])
     }
-    if (tag && categories > 0){
+    if (tag && tag > 0){
       await post.related('tag').attach([tag])
     }
     return response.ok(post)

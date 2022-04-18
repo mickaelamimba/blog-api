@@ -36,8 +36,8 @@ export default class PostValidator {
     summary: schema.string({trim:true},[
       rules.maxLength(50),
     ]),
-    categories:schema.number(),
-    tag:schema.number(),
+    categories:schema.number.optional(),
+    tag:schema.number.optional(),
   })
 
   /**

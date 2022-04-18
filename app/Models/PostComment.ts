@@ -17,7 +17,6 @@ export default class PostComment extends BaseModel {
     localKey:'post_id',
   })
   public post: BelongsTo<typeof Post>
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
   @column.dateTime({ autoCreate: true })
