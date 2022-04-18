@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon'
-import {BaseModel, column, belongsTo, BelongsTo, hasOne, HasOne,afterCreate} from '@ioc:Adonis/Lucid/Orm'
+// eslint-disable-next-line max-len
+import {BaseModel, column, belongsTo, BelongsTo,manyToMany,ManyToMany} from '@ioc:Adonis/Lucid/Orm'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
 import User from 'App/Models/User'
+import Category from 'App/Models/Category'
+import Tag from 'App/Models/Tag'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -10,10 +13,6 @@ export default class Post extends BaseModel {
   public authorId: number
   @column()
   public parentId: number
-  @hasOne(() => Post,{
-    foreignKey:'parentId',
-  })
-  public post:HasOne<typeof Post>
   @column()
   public title: string
   @column()
@@ -30,8 +29,22 @@ export default class Post extends BaseModel {
   public content: string
   @column()
   public published: boolean
-  @belongsTo(() => User)
+  @belongsTo(() => User,{
+    localKey:'authorId',
+  })
   public user: BelongsTo<typeof User>
+  @manyToMany(() => Category,{
+    pivotTable:'post_categories',
+    pivotForeignKey: 'post_id',
+    pivotRelatedForeignKey: 'category_id',
+  })
+  public category: ManyToMany<typeof Category>
+  @manyToMany(() => Tag,{
+    pivotTable:'post_tags',
+    pivotForeignKey: 'post_id',
+    pivotRelatedForeignKey: 'tag_id',
+  })
+  public tag: ManyToMany<typeof Tag>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -40,10 +53,4 @@ export default class Post extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
-  @afterCreate()
-  public static async setParentId (post: Post){
-    if(post.id){
-      post.parentId = post.id
-    }
-  }
 }

@@ -1,6 +1,7 @@
 
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import {BaseModel, column, ManyToMany, manyToMany} from '@ioc:Adonis/Lucid/Orm'
 import {slugify} from '@ioc:Adonis/Addons/LucidSlugify'
+import Post from 'App/Models/Post'
 
 export default class Category extends BaseModel {
   @column({ isPrimary: true })
@@ -17,4 +18,10 @@ export default class Category extends BaseModel {
     fields: ['title'],
   })
   public slug: string
+  @manyToMany(() => Post,{
+    pivotTable:'posts',
+    pivotForeignKey: 'category_id',
+    pivotRelatedForeignKey: 'post_id',
+  })
+  public posts: ManyToMany<typeof Post>
 }

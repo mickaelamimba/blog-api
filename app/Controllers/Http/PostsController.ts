@@ -11,12 +11,21 @@ export default class PostsController {
     return response.ok(posts)
   }
   public async store ({ request, response }:HttpContextContract){
-    const payload: any = await request.validate(PostValidator)
-    const user = await User.find(1)
-    await user?.related('post').create(
-      payload
-    )
-    return response.ok(user)
+    const {title,metaTitle,content,summary,categories,tag} = await request.validate(PostValidator)
+    const user :User | null = await User.find(2)
+    const post :Post | null = new Post()
+    post.title=title
+    post.metaTitle =metaTitle
+    post.summary = summary
+    post.content = content
+    await user?.related('post').save(post)
+    if (categories && categories > 0) {
+      await post.related('category').attach([categories])
+    }
+    if (tag && categories > 0){
+      await post.related('tag').attach([tag])
+    }
+    return response.ok(post)
   }
   public async show ({params, response }:HttpContextContract){
     const id:Number = parseInt(params.id)
