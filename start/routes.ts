@@ -23,3 +23,9 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', async () => {
   return { hello: 'world' }
 })
+Route.resource('users','UsersController').apiOnly()
+Route.resource('posts','PostsController').apiOnly()
+Route.resource('categories','CategoriesController').apiOnly()
+Route.resource('postComments','PostCommentsController').apiOnly()
+Route.resource('tags','TagsController').apiOnly()
+

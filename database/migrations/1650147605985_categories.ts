@@ -8,7 +8,7 @@ export default class Categories extends BaseSchema {
       table.increments('id')
       table.integer('parent_id').nullable().unsigned()
       table.string('title',75).notNullable()
-      table.string('metaTitle',100).nullable()
+      table.string('meta_title',100).nullable()
       table.string('slug',100).notNullable().unique()
       table.text('content').nullable()
       table.foreign('parent_id').references('categories.id')
