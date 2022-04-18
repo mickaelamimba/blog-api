@@ -9,8 +9,9 @@ export default class Users extends BaseSchema {
       table.string('first_name',50)
       table.string('last_name',50)
       table.string('mobile',15).unique()
-      table.string('email',50).unique()
-      table.string('password_hash',255)
+      table.string('email',255).notNullable()
+      table.string('password', 180).notNullable()
+      table.string('remember_me_token').nullable()
       table.text('intro','tinytext')
       table.text('profile')
 
