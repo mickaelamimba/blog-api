@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
 // eslint-disable-next-line max-len
-import {BaseModel, column, belongsTo, BelongsTo,manyToMany,ManyToMany} from '@ioc:Adonis/Lucid/Orm'
+import {BaseModel, column, belongsTo, BelongsTo, manyToMany, ManyToMany, hasMany, HasMany} from '@ioc:Adonis/Lucid/Orm'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
 import User from 'App/Models/User'
 import Category from 'App/Models/Category'
 import Tag from 'App/Models/Tag'
+import PostComment from 'App/Models/PostComment'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -30,7 +31,7 @@ export default class Post extends BaseModel {
   @column()
   public published: boolean
   @belongsTo(() => User,{
-    localKey:'authorId',
+    localKey: 'id', foreignKey: 'authorId',
   })
   public user: BelongsTo<typeof User>
   @manyToMany(() => Category,{
@@ -53,4 +54,9 @@ export default class Post extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasMany(() => PostComment,{
+    foreignKey:'post_id',
+  })
+  public comments:HasMany<typeof PostComment>
 }

@@ -10,18 +10,18 @@ export default class PostComments extends BaseSchema {
       table.text('content').nullable()
       table.specificType('published','tinyint(1)').unsigned().defaultTo(1)
       table.integer('post_id').nullable().unsigned()
-      table.foreign('post_id').references('posts.id')
-        .onDelete('NO ACTION').onUpdate('NO ACTION')
       table.integer('parent_id').nullable().unsigned()
-      table.foreign('parent_id').references('post_comments.id')
+      table.foreign('parent_id').references('posts.id')
+        .onDelete('NO ACTION').onUpdate('NO ACTION')
+      table.foreign('post_id').references('post_comments.id')
         .onDelete('NO ACTION').onUpdate('NO ACTION')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
-      table.timestamp('publishedAt', { useTz: true })
-      table.timestamp('createdAt', { useTz: true })
-      table.timestamp('updatedAt', { useTz: true })
+      table.timestamp('published_at', { useTz: true })
+      table.timestamp('created_at', { useTz: true })
+      table.timestamp('updated_at', { useTz: true })
     })
   }
 

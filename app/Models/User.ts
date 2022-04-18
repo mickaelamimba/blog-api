@@ -6,10 +6,6 @@ import Post from 'App/Models/Post'
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: number
-  @hasMany(() => Post,{
-    foreignKey:'authorId',
-  })
-  public post:HasMany<typeof Post>
   @column()
   public firstName: string
   @column()
@@ -29,6 +25,10 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true })
   public lastLogin: DateTime
+  @hasMany(() => Post,{
+    foreignKey:'authorId',
+  })
+  public post:HasMany<typeof Post>
   @beforeSave()
   public static async getFullName (user: User){
     if(user.firstName && user.lastName){

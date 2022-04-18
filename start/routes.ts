@@ -26,5 +26,6 @@ Route.get('/', async () => {
 Route.resource('users','UsersController').apiOnly()
 Route.resource('posts','PostsController').apiOnly()
 Route.resource('categories','CategoriesController').apiOnly()
-Route.resource('postCategories','PostCategoriesController').apiOnly()
+Route.resource('postComments','PostCommentsController').apiOnly()
 Route.resource('tags','TagsController').apiOnly()
+

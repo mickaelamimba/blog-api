@@ -5,14 +5,14 @@ import User from 'App/Models/User'
 
 export default class PostsController {
   public async index ({response}:HttpContextContract){
-    // @ts-ignore
-    let posts: InstanceType<Post>[]
-    posts = await Post.all()
-    return response.ok(posts)
+    const post :Post[]|null= await Post.query()
+      .preload('category').preload('tag').preload('comments').preload('user')
+    const postsJSON = post.map((post) => post.serialize())
+    return response.ok(postsJSON)
   }
   public async store ({ request, response }:HttpContextContract){
     const {title,metaTitle,content,summary,categories,tag} = await request.validate(PostValidator)
-    const user :User | null = await User.find(2)
+    const user :User | null = await User.find(1)
     const post :Post | null = new Post()
     post.title=title
     post.metaTitle =metaTitle
