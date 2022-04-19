@@ -7,10 +7,14 @@ export default class UsersController {
     const user = await User.all()
     return response.ok(user)
   }
-  public async store ({ request, response }:HttpContextContract){
-    const payload: any = await request.validate(UserValidator)
-    const user :User = await User.create(payload)
-    return response.ok(user)
+  public async store ({ auth, request, response }:HttpContextContract){
+    if (auth.user && auth.isAuthenticated){
+      const {firstName,lastName,mobile,intro}: any = await request.validate(UserValidator)
+      const user :User|null = await User.find(auth.user.id)
+      user?.merge({firstName,lastName,mobile,intro})
+      await user?.save()
+      return response.ok(user)
+    }
   }
   public async show ({params, response }:HttpContextContract){
     const id:Number = parseInt(params.id)

@@ -39,15 +39,6 @@ export default class UserValidator {
       rules.maxLength(15),
       rules.unique({ table: 'users', column: 'mobile' }),
     ]),
-    email:schema.string({trim: true},[
-      rules.email(),
-      rules.unique({ table: 'users', column: 'email' }),
-    ]),
-    passwordHash:schema.string({trim: false},[
-      rules.minLength(8),
-      rules.maxLength(16),
-      rules.required(),
-    ]),
     intro:schema.string({escape:true},[
       rules.maxLength(255),
     ]),
