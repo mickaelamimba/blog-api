@@ -39,7 +39,7 @@ export default class User extends BaseModel {
       user.profile = user.firstName +' '+ user.lastName
     }
   }
-
+  public serializeExtras = true
   @beforeSave()
   public static async hashPassword (user: User) {
     if (user.$dirty.password) {
